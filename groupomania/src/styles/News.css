@@ -1,0 +1,35 @@
+.news{
+    width: 30%;
+    padding: 10px;
+    padding-left: 30px;
+}
+
+.article{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.articleImage{
+    width: 50px;
+    margin-right: 5px;
+}
+
+.articleTitle{
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.articleDescription{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .news{
+        width: 35%;
+    }
+}

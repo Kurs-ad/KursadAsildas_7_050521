@@ -1,0 +1,10 @@
+.boutons{
+    border-radius: 15px;
+    padding: 5px;
+    background: radial-gradient(at top left, white, lightgrey);
+    margin: 15px;
+}
+
+input{
+    margin-bottom: 10px;
+}
