@@ -1,0 +1,19 @@
+.navMobile{
+    display: none;
+}
+
+@media screen and (max-width: 425px) {
+    .navMobile{
+        display: flex;
+        justify-content: space-evenly;
+        margin: 10px;
+    }
+
+    button{
+        font-size: 25px;
+        color: rgb(145, 45, 45);
+        border-radius: 10px;
+        border-color: inherit;
+        background-color: lightgrey;
+    }
+}

@@ -36,7 +36,37 @@
     transform: rotate(360deg);
   }
 }
+@media screen and (min-width: 769px) {
+  .allContent{
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 
-.allContent{
-  display: flex;
+  .allContentForMobile{
+    display: none;
+  }
+}
+
+
+@media screen and (min-width: 426px) {
+  .allContent{
+    display: flex;
+    padding-left: 20px;
+  }
+
+  .allContentForMobile{
+    display: none;
+  }
+}
+
+
+@media screen and (max-width: 425px) {
+  .allContent{
+    display: none;
+  }
+
+  .allContentForMobile{
+    display: block;
+  }
 }

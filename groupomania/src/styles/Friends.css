@@ -1,9 +1,32 @@
 .friends{
     width: 30%;
+    padding: 20px;
+    text-align: left;
 }
 
-@media screen and (max-width: 768px) {
+.friends ul{
+    padding-left: 0px;
+}
+
+.puceUser{
+    margin: 20px;
+    margin-left: 0px;
+    list-style-type: none;
+}
+
+.photoUser{
+    width: 40px;
+    margin-right: 10px;
+}
+
+@media screen and (min-width:426px) and (max-width: 768px) {
     .friends{
         display: none;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .friends{
+        width: 90%;
     }
 }

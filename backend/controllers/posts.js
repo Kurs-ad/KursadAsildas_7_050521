@@ -1,24 +1,23 @@
 const Post = require('../models/Post');
+require('sequelize')
 const fs = require('fs');
 
 exports.createPost = (req, res, next) => {
-    const postObject = JSON.parse(req.body.post); //on extrait l'objet JSON de "sauce"
-    delete postObject._id // car mongoDB nous fournit un id (c'était req.body._id)
-    const post = new Post({
-        ...postObject, //copie les champs dans le corps de la requête
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-        reactionsTotal: 0,
-        commentsTotal: 0,
-        usersReacted: [],
-        usersCommented: []
-    });
-    post.save() //enregistre sauce dans la BDD et renvoie une promise
-    .then(() => res.status(201).json({ message : 'Objet enregistré' }))
-    .catch(error => res.status(400).json({ error }));
+    console.log(req.body)
+    //const postObject = JSON.parse(req.body.post); //on extrait l'objet JSON de "sauce"
+    //delete postObject._id // car mongoDB nous fournit un id (c'était req.body._id)
+    Post.create({ //Cette méthode créé une nouvelle instance et l'enregistre dans la BDD
+            ...req.body.post, //copie les champs dans le corps de la requête
+            //imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+            reactionsTotal: 0,
+            commentsTotal: 0,
+        })
+        .then(() => res.status(201).json({ message : 'Objet enregistré' }))
+        .catch(error => res.status(400).json({ error }));
 };
 
 exports.react = (req, res, next) => {
-    Post.findOne({ _id: req.params.id })
+    Post.findOne({ where: { _id: req.params.id } })
     .then(post => {
         const id = req.body.userId;
         const reactions = req.body.reactionsTotal;
@@ -42,11 +41,15 @@ exports.react = (req, res, next) => {
 };
 
 exports.comment = (req, res, next) => {
-    Post.findOnde({ _id: req.params.id })
+    Comment.create({
+            ...req.body.comment
+        })
+    Post.findOne({ where: { _id: req.params.id } })
     .then(post => {
         const id = req.body.userId;
-        const comments = req.body.commentsTotal;
-        const commentIndex = post.usersCommented.indexOf(id);
+        const comment= req.body.comment;
+        const userPhoto = req.body.userPhoto;
+        const postId = req.params.id;
         post.usersCommented.push(id);
         post.comments.push(req.body.comment);
         post.commentsTotal ++;
@@ -55,22 +58,26 @@ exports.comment = (req, res, next) => {
 };
 
 exports.modifyPost = (req, res, next) => {
+    console.log("modify")
+    const post = Post.findOne({ where: { _id: req.params.id } });
     const postObject = req.file ? //Pour vérifier si il y a une nouvelle image ou pas (opérateur ternaire)
-    { 
-        ...JSON.parse(req.body.post),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : { ...req.body }; //copie de req.body si le fichier n'existe pas
-    Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
-    .then(() => res.status(200).json({ message : 'Objet modifié' }))
-    .catch(error => res.status(400).json({ error }));
-};
+            post.update({
+                ...req.body.post,
+                imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`},
+            { ...post, imageUrl })
+            .then(() => res.status(200).json({ message : 'Objet modifié' }))
+            .catch(error => res.status(400).json({ error }))
+        : post.update({ ...req.body }, { ...post }) //copie de req.body si le fichier n'existe pas
+        .then(() => res.status(200).json({ message : 'Objet modifié' }))
+        .catch(error => res.status(400).json({ error }));
+}
 
 exports.deletePost = (req, res, next) => {
-    Post.findOne({ _id: req.params.id })
+    Post.findOne({ where: { _id: req.params.id } })
     .then(post => {
         const filename = post.imageUrl.split('/images/')[1];
         fs.unlink('images/${filename}', () => {
-            Post.deleteOne({ _id: req.params.id})
+            post.destroy()
             .then(() => res.status(200).json({ message: 'Objet supprimé' }))
             .catch(error => res.status(400).json({ error })) 
         })
@@ -79,23 +86,33 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.deleteComment = (req, res, next) => {
-    Post.findOne({ _id: req.params.id })
-    .then(post => {
-        Post.deleteOne({ _id: req.params.id})
+    Comment.findOne({ where: { _id: req.params.id } })
+    .then(comment => {
+        comment.destroy()
         .then(() => res.status(200).json({ message: 'Objet supprimé' }))
-        .catch(error => res.status(400).json({ error })) 
+        .catch(error => res.status(400).json({ error }))
     })
     .catch(error => res.status(500).json({ error}));
 };
 
 exports.getOnePost = (req, res, next) => {
-    Post.findOne({ _id: req.params.id })
+    console.log("frgegrege")
+    const post = Post.findOne({ where: { _id: req.params.id } })
+    //     if (post === null) {
+    //         post => res.status(200).json(post)
+    //     } else {
+    //         error => res.status(404).json({ error })
+    //         console.log(post instanceof Post); // true
+    //         console.log(post.title); // 'My Title'
+    //     }
+    // Post.findOne({ _id: req.params.id })
     .then(post => res.status(200).json(post))
     .catch(error => res.status(404).json({ error }))
 };
 
 exports.getAllPosts = (req, res, next) => {
-    Post.find()
-    .then(posts => res.status(200).json(posts))
-    .catch(error => res.status(400).json({ error }));
-};
+    console.log("all")
+    Post.findAll()
+        .then(posts => res.status(200).json(posts))
+        .catch(error => res.status(400).json({ error }))
+}

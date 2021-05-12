@@ -44,6 +44,12 @@
 
 @media screen and (max-width: 768px)  {
     .post{
-        width: 65%;
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 425px)  {
+    .post{
+        width: 90%;
     }
 }

@@ -7,6 +7,8 @@ import './styles/Post.css'
 import './styles/Sign.css'
 import './styles/News.css'
 import './styles/Friends.css'
+import './styles/Nav.css'
+import './styles/TabletSideContent.css'
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 

@@ -1,8 +1,10 @@
 import photo1 from '../assets/icon.png'
 import photo2 from '../assets/icon-left-font.png'
+import photoUser from '../assets/icon.png'
 
-function News(){
-    return <div className='news'>
+function TabletSideContent(){
+    return <div className="tabletSideContent">
+        <div className='newsTablet'>
             <a className='article'>
                     <img className='articleImage' src={photo1} alt='photo1' />
                 
@@ -27,7 +29,28 @@ function News(){
                     </p>
                 </div>
             </a>
+        </div>
+        <div className='friendsTablet'>
+            <ul>
+                <li className='puceUser'>
+                    <img className='photoUser' src={photoUser} alt='photo user' />
+                    User 1
+                </li>
+                <li className='puceUser'>
+                    <img className='photoUser' src={photoUser} alt='photo user' />
+                    User 2
+                </li>
+                <li className='puceUser'>
+                    <img className='photoUser' src={photoUser} alt='photo user' />
+                    User 3
+                </li>
+                <li className='puceUser'>
+                    <img className='photoUser' src={photoUser} alt='photo user' />
+                    User 4
+                </li>
+            </ul>
+        </div>
     </div>
 }
 
-export default News
+export default TabletSideContent

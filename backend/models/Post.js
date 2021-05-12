@@ -1,20 +1,18 @@
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize();
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize('sqlite::memory:');
 
 //Création du schéma de donnée
-const post = sequelize.define('Post', {
-    userId: DataTypes.TEXT, allowNull: false,//{ type: String, required: true },
-    photo: DataTypes.TEXT, allowNull: false,//{ type: String, required: true },
-    pseudo: DataTypes.TEXT, allowNull: false,//{ type: String, required: true },
-    text: DataTypes.TEXT, allowNull: false,//{ type: String, required: true },
-    imageUrl: DataTypes.TEXT, allowNull: false,//{ type: String, required: true },
-    reactions: DataTypes.TEXT, allowNull: false,//{ type: String, required: true },
-    reactionsTotal: DataTypes.INTEGER, allowNull: false,//{ type: Number, required: true },
-    comments: DataTypes.TEXT, allowNull: false,//{ type: [String], required: true },
-    commentsTotal : DataTypes.INTEGER, allowNull: false,//{ type: Number, required: true },
-    usersCommented : { type: [String], required: true },
-    usersReacted : { type: [String], required: true }
+const Post = sequelize.define('Posts', {    
+    postId: { type: DataTypes.SMALLINT.UNSIGNED, allowNull: false, autoIncrement: true, primaryKey: true },
+    userId: { type: DataTypes.SMALLINT.UNSIGNED, allowNull: false },
+    text: { type: DataTypes.STRING, allowNull: false },
+    imageUrl: { type: DataTypes.STRING },
+    reactionsTotal: { type: DataTypes.SMALLINT.UNSIGNED, allowNull: false },
+    commentsTotal: { type: DataTypes.SMALLINT.UNSIGNED, allowNull: false },
+    postDate : { type: DataTypes.DATE, allowNull: false }
+    // photo: { type: DataTypes.STRING(100), allowNull: false },
+    // pseudo: { type: DataTypes.STRING(30), allowNull: false },
 });
 
 //pour exploiter le schéma
-module.exports = Sequelize.models.post;
+module.exports = Post

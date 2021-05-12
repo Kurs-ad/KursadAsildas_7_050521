@@ -36,7 +36,7 @@ const ddos = new Ddos;
 //donne accès aux chemins de notre système de fichiers
 const path = require('path');
 
-//const postsRoutes = require('./routes/posts');
+const postsRoutes = require('./routes/posts');
 const userRoutes = require('./routes/user');
 
 // mongoose.connect('mongodb+srv://'+user+':'+password+'@projet6oc.2xhij.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
@@ -75,7 +75,7 @@ app.use(express.json()); // transforme le corps de la requête en objet JS utili
 
 app.use('/images', express.static(path.join(__dirname, 'images'))); //middleware qui sert le dossier images
 
-//app.use('/api/posts', postsRoutes);
+app.use('/api/posts', postsRoutes);
 app.use('/api/auth', userRoutes);
 
 //export de l'appli pour pouvoir y accéder depuis les autres fichiers, notamment serveur node

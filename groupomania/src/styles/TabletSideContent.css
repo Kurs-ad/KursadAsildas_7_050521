@@ -1,0 +1,28 @@
+.tabletSideContent{
+    display: none;
+}
+
+@media screen and (min-width: 426px) and (max-width: 768px) {
+    .tabletSideContent{
+        display: flex;
+        flex-direction: column;
+        width: 35%;
+    }
+    
+    .newsTablet{
+        padding-right: 20px;
+    }
+
+    .friendsTablet{
+        text-align: left;
+        padding-right: 20px;
+    }
+
+    .friendsTablet ul {
+        padding-left: 0px;
+    }
+
+    .puceUser{
+        margin-left: 0px;
+    }
+}

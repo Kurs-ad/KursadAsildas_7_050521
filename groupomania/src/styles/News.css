@@ -16,6 +16,12 @@
     margin-right: 5px;
 }
 
+.articleDescription{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .articleTitle{
     margin: 0;
     overflow: hidden;
@@ -23,13 +29,23 @@
     white-space: nowrap;
 }
 
-.articleDescription{
+.articleSubtitle{
+    font-size: 13px;
     margin-top: 5px;
     margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (min-width:426px) and (max-width: 768px) {
     .news{
-        width: 35%;
+        display: none;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .news{
+        width: 90%;
     }
 }
