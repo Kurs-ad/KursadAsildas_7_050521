@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './styles/Logo.css'
 import './styles/Body.css'
 import './styles/Banner.css'
 import './styles/Post.css'
@@ -8,7 +9,10 @@ import './styles/Sign.css'
 import './styles/News.css'
 import './styles/Friends.css'
 import './styles/Nav.css'
+import './styles/NewPost.css'
 import './styles/TabletSideContent.css'
+import './styles/UsersInformations.css'
+import './styles/Footer.css'
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 

@@ -13,7 +13,7 @@ function Nav() {
     const amis = <FontAwesomeIcon icon={faUsers} />
     const [onglet, setIsOpen] = useState(0)
 
-        if(onglet == 0){
+        if(onglet === 0){
             return <div>
                 <div className="navMobile">
                 <button>
@@ -28,7 +28,7 @@ function Nav() {
                 </div>
                 <Post />
         </div>
-        } else if(onglet == 1){
+        } else if(onglet === 1){
             return <div>
                 <div className="navMobile">
                     <button onClick={() => setIsOpen(0)}>

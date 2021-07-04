@@ -1,29 +1,8 @@
 //importation d'express
 const express = require('express');
 
-//importation de dotenv
-require('dotenv').config();
-let username = process.env.USERNAME;
-let password = process.env.PASSWORD;
-let bdd = process.env.BDD;
-
 //importation de sequelize
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize(bdd, username, password, {
-    host: 'localhost',
-    dialect: 'mysql'
-});
-
-//Pour tester si la connection à la BDD est réalisée
-run().catch(error => console.log(error.stack));
-async function run() {
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-}
+require('./sequelize')
 
 //importation de helmet (entre autres, filtre les scripts intersites (XSS))
 let helmet = require('helmet');
@@ -38,6 +17,7 @@ const path = require('path');
 
 const postsRoutes = require('./routes/posts');
 const userRoutes = require('./routes/user');
+const { sequelize } = require('./models/Post');
 
 // mongoose.connect('mongodb+srv://'+user+':'+password+'@projet6oc.2xhij.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
 //     { useNewUrlParser: true,
@@ -76,7 +56,7 @@ app.use(express.json()); // transforme le corps de la requête en objet JS utili
 app.use('/images', express.static(path.join(__dirname, 'images'))); //middleware qui sert le dossier images
 
 app.use('/api/posts', postsRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/api/users', userRoutes);
 
 //export de l'appli pour pouvoir y accéder depuis les autres fichiers, notamment serveur node
 module.exports = app;

@@ -1,16 +1,24 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome } from '@fortawesome/free-solid-svg-icons'
-import { faBell } from '@fortawesome/free-solid-svg-icons'
-import logo from '../assets/icon-left-font-monochrome-white.png'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons' 
+import logoDesktop from '../assets/icon-left-font-monochrome-white.png'
+import logoMobile from '../assets/monIconeMobile.png'
+import NewPost from './NewPost'
 
-function Banner(){
+function Banner({setPage, usersId, refresh, setRefresh}){
     const home = <FontAwesomeIcon icon={faHome} />
-    const bell = <FontAwesomeIcon icon={faBell} />
+    const userCircle = <FontAwesomeIcon icon={faUserCircle} />
     return <div className="banniere">
-        <img src={logo} alt="logo groupomania" className='logo' />
-        <input type="text" className='champs_de_recherche' />
+        <img src={logoDesktop} alt="logo groupomania" className='logoDesktop' />
+        <img src={logoMobile} alt="logo groupomania" className='logoMobile' />
+        <NewPost refresh={refresh} setRefresh={setRefresh} usersId={usersId}/>
         <div className="icones_banniere">
-            {home} {bell}
+            <div className="homeIcon" onClick={() => setPage("mainPage")}>
+                {home}
+            </div>
+            <div className="userIcon" onClick={() => setPage("accountPage")}>
+                {userCircle}
+            </div>
         </div>
     </div>
 }

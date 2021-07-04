@@ -11,9 +11,9 @@
 
     button{
         font-size: 25px;
-        color: rgb(145, 45, 45);
+        color: whitesmoke;
         border-radius: 10px;
         border-color: inherit;
-        background-color: lightgrey;
+        background-color: black;
     }
 }

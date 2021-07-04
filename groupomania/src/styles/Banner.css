@@ -1,7 +1,8 @@
 .banniere{
     display: flex;
     justify-content: space-between;
-    height: 150px;
+    align-items: center;
+    height: 100px;
     box-shadow: 0px 0px 6px 7px black;
     margin-bottom: 20px;
 }
@@ -15,12 +16,39 @@
     display: flex;
     justify-content: space-around;
     width: 100px;
-    height: 20px;
+    font-size: 25px;
     align-self: center;
 }
 
-@media screen and (max-width: 768px) {
+.logoMobile{
+    display: none;
+}
+
+.logoDesktop{
+    width: 30vw;
+}
+
+.homeIcon,
+.userIcon:hover{
+    cursor: pointer;
+}
+
+@media screen and (max-width: 425px) {
     .banniere{
-        height: 100px;
+        height: 75px;
+        background-color: black;
+        align-items: center;
+    }
+    .logoMobile{
+        max-height: 80%;
+        filter: invert();
+        display: inherit;
+    }
+    .logoDesktop{
+        display: none;
+    }
+    .icones_banniere{
+        width: 70px;
+        font-size: 20px;
     }
 }

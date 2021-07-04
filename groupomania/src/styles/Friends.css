@@ -1,7 +1,16 @@
 .friends{
     width: 30%;
+    max-height: 500px;
     padding: 20px;
     text-align: left;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar{
+    width: 4px;
+}
+::-webkit-scrollbar-thumb{
+    background: linear-gradient(transparent, black, grey, transparent);
 }
 
 .friends ul{
@@ -9,9 +18,19 @@
 }
 
 .puceUser{
+    display: flex;
+    align-items: center;
     margin: 20px;
     margin-left: 0px;
     list-style-type: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.puceUser img{
+    width: 60px;
+    margin-right: 20px;
 }
 
 .photoUser{
@@ -21,7 +40,14 @@
 
 @media screen and (min-width:426px) and (max-width: 768px) {
     .friends{
-        display: none;
+        width: 100%;
+        grid-column: 2/3;
+        padding: 0px;
+        max-height: inherit;
+    }
+
+    .puceUser{
+        padding-left: 60px;
     }
 }
 

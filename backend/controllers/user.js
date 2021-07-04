@@ -2,17 +2,22 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
+const Post = require('../models/Post');
+const Reaction = require("../models/Reaction")
+const { getUsersPost } = require('./posts');
 
 exports.signup = (req, res, next) => {
+    console.log("create") ;
+    console.log( req.body , req.params);console.log(req.file, req.files);
     bcrypt.hash(req.body.password, 10) //nous appelons la fonction de hachage de bcrypt dans notre mot de passe et lui demandons de « saler » le mot de passe 10 fois.
     .then(hash => { // nous recevons le hash généré
-        const user = new User({
+        User.create({
             email: Buffer.from(req.body.email).toString('base64'),
             password: hash,
-            name: req.body.name,
-            photo: req.body.photo
-        });
-        user.save()
+            pseudo: req.body.pseudo,
+            photo: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+            createdAt: Date.now(),
+        })
         .then(() => res.status(201).json({ message: 'Utilisateur créé' }))
         .catch(error => res.status(400).json({ error }));
     })
@@ -20,11 +25,14 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-    User.findOne({ email: Buffer.from(req.body.email).toString('base64') })
+    console.log("login")
+    //Buffer.from(req.body.email).toString('base64')
+    User.findOne({where : { email: Buffer.from(req.body.email).toString('base64') }}, {include: [Post]})
     .then(user => {
         if (!user) {
             return res.status(401).json({ error: 'Utilisateur non trouvé '});
         }
+        return res.status(200).json(user)
         bcrypt.compare(req.body.password, user.password)
         .then(valid => {
             if (!valid) {
@@ -43,3 +51,15 @@ exports.login = (req, res, next) => {
     })
     .catch(error => res.status(500).json({ error }));
 };
+
+exports.getAllUsers = (req, res, next) => {
+    User.findAll()
+    .then(posts => res.status(200).json(posts))
+    .catch(error => res.status(400).json({ error }))
+}
+
+exports.getOneUser = (req, res, next) => {
+    User.findOne({ where: { email: Buffer.from(req.params.email).toString('base64') } })
+    .then(user => res.status(200).json(user))
+    .catch(error => res.status(400).json({ error }))
+}

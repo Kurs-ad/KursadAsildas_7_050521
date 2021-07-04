@@ -1,0 +1,25 @@
+.footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0px 0px 6px 7px black;
+}
+
+.liensFooter{
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    margin: auto;
+    padding: 10px;
+    list-style-type: none;
+}
+
+.liensFooter a{
+    color: whitesmoke;
+}
+
+@media screen and (max-width: 425px) {
+    .liensFooter{
+        padding: 5px;
+    }
+}
